@@ -42,17 +42,21 @@
     align-items: center;
 }
 
+/* WARNING: Any `.btn-link` in a modal is unaffected */
 .workbench-content .btn-link,
 .workbench-content .wb-link {
   color: #9d85ef;
 }
 
 /* FP-546: These styles will become deprecated duplicates of `bootstrap.btn.css` */
+/* WARNING: Any `.btn-secondary` in a modal is unaffected */
 .workbench-content .btn-secondary {
   background-color: #F4F4F4;
   color: #484848;
   border: 1px solid #AFAFAF;
 }
+
+/* WARNING: Any `.btn-primary` in a modal is unaffected */
 .workbench-content .btn-primary {
   background-color: #9d85ef;
   color: white;
