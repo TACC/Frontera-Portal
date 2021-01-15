@@ -33,6 +33,13 @@ Styleguide Components.Bootstrap.Btn
   border: var(--global-border--normal);
 }
 .btn-secondary:disabled {
+  /* Styles duplicated from `Workbench.scss` */
+  /* FAQ: Makes disabled modal buttons mirror disabled workbench buttons */
+  /* FAQ: That (↑) is because `Workbench.scss` styles do not apply to modals */
+  background-color: #F4F4F4;
+  color: #484848;
+  border: 1px solid #AFAFAF;
+
   /* FP-546: Implementation of this style (which matches design) is pending:
      - Confirmation from designers (these styles have poor color contrast)
      - Removal of overly-specific `Workbench.scss` styles (requires FP-546)
