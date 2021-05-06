@@ -9,9 +9,16 @@ import {
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { parse } from 'query-string';
 
+import './DataFiles.global.css';
 import './DataFiles.module.css';
 
-import { SectionMessage, LoadingSpinner } from '_common';
+import {
+  Section,
+  SectionTableWrapper,
+  SectionMessage,
+  LoadingSpinner
+} from '_common';
+import Work2Message from './Work2Message';
 import DataFilesToolbar from './DataFilesToolbar/DataFilesToolbar';
 import DataFilesListing from './DataFilesListing/DataFilesListing';
 import DataFilesSidebar from './DataFilesSidebar/DataFilesSidebar';
@@ -72,12 +79,17 @@ const DataFilesSwitch = React.memo(() => {
             }
           });
           return (
+            /* !!!: Temporary bad indentation to make simpler PR diff */
+            /* eslint-disable prettier/prettier */
+            <SectionTableWrapper styleName="content" manualContent>
             <DataFilesListing
               api={params.api}
               scheme={params.scheme}
               system={params.system}
               path={params.path || '/'}
             />
+            </SectionTableWrapper>
+            /* eslint-enable prettier/prettier */
           );
         }}
       />
@@ -118,11 +130,13 @@ const DataFiles = () => {
   }
 
   return (
-    <div styleName="container">
-      {/* row containing breadcrumbs and toolbar */}
-      <div styleName="header">
+    /* !!!: Temporary bad indentation to make simpler PR diff */
+    /* eslint-disable prettier/prettier */
+    <Section
+      bodyClassName="has-loaded-datafiles"
+      welcomeMessageName="DATA"
+      header={
         <DataFilesBreadcrumbs
-          styleName="header-title"
           api={listingParams.api}
           scheme={listingParams.scheme}
           system={listingParams.system}
@@ -130,20 +144,23 @@ const DataFiles = () => {
           section="FilesListing"
           route
         />
+      }
+      headerActions={
         <DataFilesToolbar
           api={listingParams.api}
           scheme={listingParams.scheme}
         />
-      </div>
-      {/* row containing sidebar and listing pane */}
-      <div styleName="items">
-        <DataFilesSidebar styleName="sidebar" readOnly={readOnly} />
-        <div styleName="content">
+      }
+      content={
+        <>
+        <DataFilesSidebar readOnly={readOnly} />
           <DataFilesSwitch />
-        </div>
-      </div>
       <DataFilesModals />
-    </div>
+        </>
+      }
+      messages={<Work2Message />}
+    />
+    /* eslint-enable prettier/prettier */
   );
 };
 

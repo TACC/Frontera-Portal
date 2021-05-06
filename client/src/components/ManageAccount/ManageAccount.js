@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Alert, Col, Row, Container } from 'reactstrap';
+import { Alert } from 'reactstrap';
 import { isEmpty } from 'lodash';
-import { LoadingSpinner } from '_common';
+import { LoadingSpinner, Section } from '_common';
 import {
   RequiredInformation,
   ChangePassword,
@@ -16,7 +16,10 @@ import {
   EditOptionalInformationModal,
   EditRequiredInformationModal
 } from './ManageAccountModals';
+
 import './ManageAccount.scss';
+import './ManageAccount.global.css';
+import './ManageAccount.module.css';
 
 const ManageAccountView = () => {
   const {
@@ -25,37 +28,22 @@ const ManageAccountView = () => {
     data: { licenses, integrations }
   } = useSelector(state => state.profile);
   const dispatch = useDispatch();
-  const welcomeMessages = useSelector(state => state.welcomeMessages);
-  const onDismissWelcome = section => {
-    const newMessagesState = {
-      ...welcomeMessages,
-      [section]: false
-    };
-    dispatch({ type: 'SAVE_WELCOME', payload: newMessagesState });
-  };
   useEffect(() => {
     dispatch({ type: 'GET_PROFILE_DATA' });
   }, [dispatch, isLoading]);
   return (
-    <Container fluid className="manage-account-wrapper">
-      <Container fluid className="manage-account-content">
-        <Alert
-          isOpen={welcomeMessages.profile}
-          toggle={() => onDismissWelcome('profile')}
-          color="secondary"
-          className="welcomeMessageGeneral"
-        >
-          This page allows you to manage your account profile, change your
-          password and view software licenses.
-        </Alert>
-        <Row className="manage-account-header">
-          <h5>Manage Account</h5>
-          <Link to="/workbench/dashboard" style={{ fontWeight: '500' }}>
-            Back to Dashboard
-          </Link>
-        </Row>
-        <Row className="user-profile">
-          <Col lg="8" className="user-profile-main">
+    /* !!!: Temporary bad indentation to make simpler PR diff */
+    /* eslint-disable prettier/prettier */
+    <Section
+      bodyClassName="has-loaded-account"
+      welcomeMessageName="ACCOUNT"
+      header="Manage Account"
+      headerActions={
+        <Link to="/workbench/dashboard" className="wb-link">
+          Back to Dashboard
+        </Link>
+      }
+      content=
             {isLoading ? (
               <LoadingSpinner />
             ) : (
@@ -71,23 +59,17 @@ const ManageAccountView = () => {
                 <ChangePasswordModal />
                 <EditOptionalInformationModal />
                 <EditRequiredInformationModal />
-              </>
-            )}
-          </Col>
-          <Col lg="4">
-            {isLoading ? (
-              <LoadingSpinner />
-            ) : (
-              <>
                 {!isEmpty(licenses) && <Licenses />}
                 {!isEmpty(integrations) && <Integrations />}
                 <ChangePassword />
               </>
             )}
-          </Col>
-        </Row>
-      </Container>
-    </Container>
+      contentStyleName="panels"
+      contentClassName="manage-account-content"
+      contentLayoutName={isLoading ? `oneColumn` : `multiColumnUnequal`}
+      contentShouldScroll
+    />
+    /* eslint-enable prettier/prettier */
   );
 };
 

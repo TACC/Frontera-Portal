@@ -3,6 +3,7 @@ import { useTable } from 'react-table';
 import { Button, Modal, ModalHeader, ModalBody, Table } from 'reactstrap';
 import { useSelector, useDispatch } from 'react-redux';
 import { shape, string, arrayOf, bool } from 'prop-types';
+import { SectionHeader, SectionTableWrapper } from '_common';
 import { GoogleDriveModal } from './ManageAccountModals';
 import './ManageAccount.scss';
 
@@ -77,9 +78,12 @@ export const RequiredInformation = () => {
     key => !demographics[key]
   );
   return (
-    <div className="profile-component-wrapper">
-      <div className="profile-component-header">
-        <strong>Required Information</strong>
+    /* !!!: Temporary bad indentation to make simpler PR diff */
+    /* eslint-disable prettier/prettier */
+    <SectionTableWrapper
+      manualHeader={
+      <SectionHeader
+        actions={
         <Button
           color="link"
           onClick={openModal}
@@ -88,7 +92,14 @@ export const RequiredInformation = () => {
         >
           Edit Required Information
         </Button>
-      </div>
+        }
+        isForList
+      >
+        Required Information
+      </SectionHeader>
+      }
+      manualContent
+    >
       <TableTemplate
         attributes={{
           columns,
@@ -98,7 +109,8 @@ export const RequiredInformation = () => {
           }
         }}
       />
-    </div>
+    </SectionTableWrapper>
+    /* eslint-enable prettier/prettier */
   );
 };
 /* eslint-disable react/no-danger */
@@ -176,12 +188,17 @@ export const Licenses = () => {
   );
   const data = useMemo(() => licenses, [licenses]);
   return (
-    <div className="profile-component-wrapper">
-      <div className="profile-component-header">
-        <strong>Licenses</strong>
-      </div>
+    /* !!!: Temporary bad indentation to make simpler PR diff */
+    /* eslint-disable prettier/prettier */
+    <SectionTableWrapper
+      manualHeader={
+      <SectionHeader isForList>Licenses</SectionHeader>
+      }
+      manualContent
+    >
       <TableTemplate attributes={{ columns, data }} />
-    </div>
+    </SectionTableWrapper>
+    /* eslint-enable prettier/prettier */
   );
 };
 
@@ -227,7 +244,7 @@ export const GoogleDriveIntegrationCell = ({ activated }) => {
             onClick={toggle}
             className="license-button"
           >
-            Connect to Google Drive
+            Setup Google Drive
           </Button>
         </div>
       )}
@@ -252,12 +269,17 @@ export const Integrations = () => {
   );
   const data = useMemo(() => integrations, [integrations]);
   return (
-    <div className="profile-component-wrapper">
-      <div className="profile-component-header">
-        <strong>3rd Party Apps</strong>
-      </div>
+    /* !!!: Temporary bad indentation to make simpler PR diff */
+    /* eslint-disable prettier/prettier */
+    <SectionTableWrapper
+      manualHeader={
+      <SectionHeader isForList>3rd Party Apps</SectionHeader>
+      }
+      manualContent
+    >
       <TableTemplate attributes={{ columns, data }} />
-    </div>
+    </SectionTableWrapper>
+    /* eslint-enable prettier/prettier */
   );
 };
 export const ChangePassword = () => {
@@ -269,10 +291,8 @@ export const ChangePassword = () => {
   const openModal = () =>
     dispatch({ type: 'OPEN_PROFILE_MODAL', payload: { password: true } });
   return (
-    <div className="profile-component-wrapper">
-      <div className="profile-component-header">
-        <strong>Change Password</strong>
-      </div>
+    <article>
+      <SectionHeader isForList>Change Password</SectionHeader>
       <div
         style={{
           display: 'flex',
@@ -285,13 +305,14 @@ export const ChangePassword = () => {
         </Button>
         {lastChanged && (
           <span
-            style={{ fontSize: '14px', marginLeft: '1rem', color: '#707070' }}
+            style={{ fontSize: '12px', marginLeft: '1rem', color: '#707070' }}
           >
             Last Changed {lastChanged}
           </span>
         )}
       </div>
-    </div>
+    </article>
+    /* eslint-enable prettier/prettier */
   );
 };
 const WebsiteCell = ({ cell: { value } }) => {
@@ -349,9 +370,12 @@ export const OptionalInformation = () => {
   const openModal = () =>
     dispatch({ type: 'OPEN_PROFILE_MODAL', payload: { optional: true } });
   return (
-    <div className="profile-component-wrapper">
-      <div className="profile-component-header">
-        <strong>Optional Information</strong>
+    /* !!!: Temporary bad indentation to make simpler PR diff */
+    /* eslint-disable prettier/prettier */
+    <SectionTableWrapper
+      manualHeader={
+      <SectionHeader
+        actions={
         <Button
           color="link"
           className="form-button"
@@ -360,8 +384,16 @@ export const OptionalInformation = () => {
         >
           Edit Optional Information
         </Button>
-      </div>
+        }
+        isForList
+      >
+        Optional Information
+      </SectionHeader>
+      }
+      manualContent
+    >
       <TableTemplate attributes={{ columns, data }} />
-    </div>
+    </SectionTableWrapper>
+    /* eslint-enable prettier/prettier */
   );
 };
